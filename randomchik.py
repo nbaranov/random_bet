@@ -1,4 +1,6 @@
-import random, re, sys
+import random
+import re
+from read_from_livescore import matches
 
 champs = ["ГЕРМАНИЯ: Третья лига\n",
 		  "НИДЕРЛАНДЫ: Первый дивизион\n",
@@ -11,13 +13,7 @@ champs = ["ГЕРМАНИЯ: Третья лига\n",
 		  "ФИНЛЯНДИЯ: Высшая лига\n",
 		  "ШВЕЦИЯ: Первая лига\n" ]
 
-filein = open('in.txt', 'r', encoding='utf-8')
-lines = []
-
-for line in filein:
-	lines.append(line)
-filein.close()
-
+'''
 matches = []
 for i in range(0 , len(lines) -1):
 	if lines[i] in champs:
@@ -41,9 +37,11 @@ for i in range(0 , len(lines) -1):
 						i += 1
 			else:
 				i += 1
+'''
 
-#for line in matches:
-	#print(line)
+matches_list = matches()
+for match in matches_list:
+	print(match)
 
 
 fileout = open('out.txt', 'w', encoding='utf-8')
