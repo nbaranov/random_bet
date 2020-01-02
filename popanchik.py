@@ -5,14 +5,15 @@ import random
 import re
 from read_from_livescore import matches
 from moduls.ends import ends
+from moduls.StartHour import startHour
 
 
 def popanmatches(matches):
     popanmatches = []
-    print(f'Используются матчи, которые начнутся после {hour}:00')
+#    print(f'Используются матчи, которые начнутся после {hour}:00')
     for line in matches:
         if ((1.45 <= line["kw1"] <= 1.85 or 1.45 <= line["kw2"] <= 1.85) and int(line["time"][0:2]) > hour
-                and not ((re.search(r"(Ж)", line["team1"])) or (re.search(r"(Ж)", line["team2"]))
+                and not ((re.search(r"\(Ж\)", line["team1"])) or (re.search(r"\(Ж\)", line["team2"]))
                          or (re.search(r"U19", line["team1"])) or (re.search(r"U19", line["team2"]))
                          or (re.search(r"U21", line["team1"])) or (re.search(r"U21", line["team2"]))
                          or (re.search(r"U20", line["team1"])) or (re.search(r"U20", line["team2"]))
@@ -24,65 +25,46 @@ def popanmatches(matches):
 def popan(popanmatches):
     press = []
     coef = 1
-    while coef < min_coef:
+    a = 0
+    ligth_press = random.randint(2,5)
+    if ligth_press > (len(popanmatches) - len(usedmatches)):
+        print("Недостаточно попанских матчей на 2 пресса")
+        return
+
+    while a < ligth_press:
         i = random.randint(0, len(popanmatches) - 1)
         if popanmatches[i] not in usedmatches:
             usedmatches.append(popanmatches[i])
+            a += 1
             if popanmatches[i]["kw1"] < popanmatches[i]["kw2"]:
-                press.append(popanmatches[i]["country"] + " " + popanmatches[i]["time"] + " " +
-                             popanmatches[i]["team1"] + " -  " + popanmatches[i]["team2"] + " П1 кф. " + str(
-                    popanmatches[i]["kw1"]))
+                press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
+{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П1 кф. {popanmatches[i]["kw1"]}')
                 coef *= popanmatches[i]["kw1"]
             else:
-                press.append(popanmatches[i]["country"] + " " + popanmatches[i]["time"] + " " +
-                             popanmatches[i]["team1"] + " -  " + popanmatches[i]["team2"] + " П2 кф. " + str(
-                    popanmatches[i]["kw2"]))
+                press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
+{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П2 кф. {popanmatches[i]["kw2"]}')
                 coef *= popanmatches[i]["kw2"]
-        if len(usedmatches) == len(popanmatches):
-            break
-    press.append(str("Ставка  \tИтоговый кф\t" + str(round(coef, 2))))
-    #    print("Попанчик cобрал пресс с кф: "+ str(round(coef,2)))
+
+
+    press.append(f"Ставка  Итоговый кф {round(coef, 2)}")
     return press
 
 
-hour = int(input("Со скольки часов брать матчи? "))
-popanmatches = popanmatches(matches())
-popanpress = []
+def popanchik():
+    popanpress = []
+
+    print(f'''Найден{ends(len(popanmatches), "", "о", "о")} \
+{len(popanmatches)} матч{ends(len(popanmatches), "", "а", "ей")} для Попанчика ''')
+
+    for _ in range(amt_preses):
+        press = popan(popanmatches)
+        if press == None: continue
+        else: popanpress.append(press)
+
+    return popanpress
+
+
+hour = startHour()
+amt_preses = 2
 usedmatches = []
-
-print(
-    f'Найден{ends(len(popanmatches), "", "о", "о")} {len(popanmatches)} попански{ends(len(popanmatches), "й", "х", "х")} матч{ends(len(popanmatches), "", "а", "ей")} \n')
-amt_preses = int(input("Желаемое количество прессов "))
-min_coef = float(input("Желаемый минимальный кеф пресса "))
-
-for i in range(amt_preses):
-    popanpress.append(popan(popanmatches))
-    if len(usedmatches) == len(popanmatches):
-        print("Все попанские матчи были использовали. Кеф последнего пресса может быть меньше желаемого")
-        break
-
-fileout = open("popan_out.txt", "w", encoding="UTF 8")
-
-if len(popanpress) < 1:
-    fileout.write('Попанчик сегодня отдыхает')
-else:
-    fileout.write("#ПальцемВНебо@probitybets\n\nПоддержка и благодарность:\nhttps://vk.com/app6887721_-93234960\n\n")
-    if len(popanpress) > 1:
-        fileout.write("Прессы от Попанчика на сегодня:\n")
-    else:
-        fileout.write("Пресс от Попанчика на сегодня:\n")
-    count = 0
-    for press in popanpress:
-        count += 1
-        fileout.write("\n" + str(count) + ".\n")
-        print("\n" + str(count) + ".")
-        for i in press:
-            fileout.write(i + "\n")
-            print(i)
-
-fileout.close()
-print(
-    f'\nИспользовано {len(usedmatches)} попански{ends(len(usedmatches), "й", "х", "х")} матч{ends(len(usedmatches), "", "а", "ей")}')
-print(f'Попанчик собрал {count} пресс{ends(count, "", "а", "ов")}')
-input(
-    "\nРабота программы успешно завершена. \nПрогнозы добавлены в файл popan_out.txt \nНажмите Enter чтобы закрыть программу.")
+popanmatches = popanmatches(matches())
