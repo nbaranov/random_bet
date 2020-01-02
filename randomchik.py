@@ -1,3 +1,4 @@
+<<<<<<< ours
 import random
 import re
 from read_from_livescore import matches
@@ -49,17 +50,55 @@ fileout = open('out.txt', 'w', encoding='utf-8')
 for line in matches:
 	if re.match(r"[А-Я]{4,}", str(line)):
 		fileout.write(str(line))
-	else:
-		W1 = int(100 / line[3])
-		X = int(100 / line[4])
-		W2 = int(100 / line[5])
-		i = random.randint(1, W1+X+W2)
-		#print(W1, W1+X, W1+X+W2, i)
-		if i < W1:
-			fileout.write(str(line[0]) + "\t" + str(line[1]) + "\t-\t" + str(line[2]) + "\t Победа 1 \t ставка:\t" + str(random.randint(5, 50) *10) + "\t кеф. \t" + str(line[3]) + "\n")
-		elif i < W1 + X:
-			fileout.write(str(line[0]) + "\t" + str(line[1]) + "\t-\t" + str(line[2]) + "\t Ничья \t ставка:\t" + str(random.randint(5, 50) *10) + "\t кеф. \t" + str(line[4]) + "\n")
-		else:
-			fileout.write(str(line[0]) + "\t" + str(line[1]) + "\t-\t" + str(line[2]) + "\t Победа 2 \t ставка:\t" + str(random.randint(5, 50) *10) + "\t кеф. \t" + str(line[5]) + "\n")
+=======
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-fileout.close()
+import random
+import re
+from read_from_livescore import matches
+from moduls.ends import ends
+from moduls.StartHour import startHour
+
+
+def randomMathches(matches):
+	randomMathches = []
+	for match in matches:
+		if (match["kw1"] > 1.45) and (match["kw2"] > 1.45) and int(match["time"][0:2]) > hour:
+			randomMathches.append(match)
+	print(f'''Найден{ends(len(randomMathches), "", "о", "о")} \
+{len(randomMathches)} матч{ends(len(randomMathches), "", "а", "ей")} для Рандомчика''')
+	return randomMathches
+
+
+def randomchik():
+	randomMathches = []
+
+	if len(matches) < 2:
+		print("У рандомчика матчей нет")
+		return  randomMathches
+	elif len(matches) > 5:
+		count = random.randint(2,5)
+>>>>>>> theirs
+	else:
+		count = random.randint(2,len(matches) - 1)
+
+	for _ in range(count): 
+		i = random.randint(0, len(matches)-1)
+		chanceW1 = int (100 / matches[i]["kw1"])
+		chanceX = int (100 / matches[i]["kx"])
+		chanceW2 = int (100 / matches[i]["kw2"])
+		fullChance = chanceW1 + chanceX + chanceW2
+
+		result = random.randint(0, fullChance)
+		if result <= chanceW1:
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tПобеда1\t{matches[i]["kw1"]}') 
+		elif result <= chanceW1 + chanceX:
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tНичья\t{matches[i]["kx"]}')
+		else:
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\t Победа2\t{matches[i]["kw2"]}')
+		matches.pop(i)
+	return randomMathches
+
+hour = startHour()
+matches = randomMathches(matches()) # отбираем матчи фукцией randomMatches с аргументом функцией matches из модуля read_from_livescore
