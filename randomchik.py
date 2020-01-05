@@ -35,14 +35,14 @@ def randomchik():
 		chanceX = int (100 / matches[i]["kx"])
 		chanceW2 = int (100 / matches[i]["kw2"])
 		fullChance = chanceW1 + chanceX + chanceW2
-
+		stavka = random.randint(50,100)
 		result = random.randint(0, fullChance)
 		if result <= chanceW1:
-			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tПобеда1\t{matches[i]["kw1"]}') 
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tПобеда1\tсумма\t{stavka}\tкф.\t{matches[i]["kw1"]}') 
 		elif result <= chanceW1 + chanceX:
-			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tНичья\t{matches[i]["kx"]}')
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\tНичья\tсумма\t{stavka}\tкф.\t{matches[i]["kx"]}')
 		else:
-			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\t Победа2\t{matches[i]["kw2"]}')
+			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\t Победа2\tсумма\t{stavka}\tкф.\t{matches[i]["kw2"]}')
 		matches.pop(i)
 	return randomMathches
 
