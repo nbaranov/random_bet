@@ -3,7 +3,7 @@
 
 import random
 import re
-from read_from_livescore import matches
+from moduls.read_from_livescore import matches
 from moduls.ends import ends
 from moduls.StartHour import startHour
 
