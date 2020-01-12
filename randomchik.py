@@ -3,23 +3,22 @@
 
 import random
 import re
-from moduls.read_from_livescore import matches
 from moduls.ends import ends
-from moduls.StartHour import startHour
 
 
-def randomMathches(matches):
+def returnMatchesForRandomchik(matches, hour):
 	randomMathches = []
 	for match in matches:
-		if (match["kw1"] > 1.45) and (match["kw2"] > 1.45) and int(match["time"][0:2]) > hour:
+		if (match["kw1"] > 1.45) and (match["kw2"] > 1.45) and int(match["time"][0:2]) >= hour:
 			randomMathches.append(match)
 	print(f'''Найден{ends(len(randomMathches), "", "о", "о")} \
 {len(randomMathches)} матч{ends(len(randomMathches), "", "а", "ей")} для Рандомчика''')
 	return randomMathches
 
 
-def randomchik():
+def randomchik(matches, hour):
 	randomMathches = []
+	matches = returnMatchesForRandomchik(matches, hour)
 
 	if len(matches) < 2:
 		print("У рандомчика матчей нет")
@@ -46,5 +45,4 @@ def randomchik():
 		matches.pop(i)
 	return randomMathches
 
-hour = startHour()
-matches = randomMathches(matches()) # отбираем матчи фукцией randomMatches с аргументом функцией matches из модуля read_from_livescore
+ 
