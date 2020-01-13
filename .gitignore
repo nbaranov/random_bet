@@ -130,5 +130,7 @@ dmypy.json
 
 # temp
 in.txt
+in.txt~
 out.txt
+out.txt~
 livescore.html

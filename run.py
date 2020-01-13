@@ -9,17 +9,17 @@ def pressWrite(press):
         fileout.write(f'{i} \n')
 
 while True:
-    data = (input("Смотреть прогнозы на сегодня - 0 или на завтра -1. Введите 0 или 1 :"))
+    data = (input("Собрать прогнозы \nна сегодня - 0 \nна завтра -1. \nВведите 0 или 1 :"))
     try:
         data = int(data)
         if data == 0:
             from moduls.StartHour import startHour
             hour = startHour()
-            print(f'Используются матчи, которые начнутся после {hour}:00')
+            print(f'Используются матчи, которые начнутся после {hour}:00\n')
             break
         elif data == 1:
             hour = 0
-            print(f'Используются все матчи, которые начнутся завтра')
+            print(f'Используются все матчи, которые начнутся завтра\n')
             break
         else:
             print('Введите "0" для матчей сегодня или "1" для матчей завтра :')
@@ -41,7 +41,7 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
             count = 0
             for press in popanpress:
                 count += 1
-                fileout.write(f"\nПресс {count} .\n")
+                fileout.write(f"\nПресс {count}.\n")
                 pressWrite(press)
         else:
             fileout.write("Пресс от Попанчика на сегодня:\n")

@@ -11,15 +11,15 @@ from bs4 import BeautifulSoup as bs
 def matches(data):
 
 
-    driver = webdriver.Chrome(executable_path="/home/nick/Documents/random_bet/chromedriver")
+    driver = webdriver.Chrome(executable_path="./chromedriver")
     driver.get("https://www.livescore.in/ru/")
-    time.sleep(4)
+    time.sleep(5)
     if data == 1:
         driver.find_element_by_xpath('/html/body/div[6]/div[1]/div/div[1]/div[2]/div[7]/div[2]/div[1]/div[2]/div[3]/div').click()
-        time.sleep(3)
-    driver.find_element_by_xpath('/html/body/div[6]/div[1]/div/div[1]/div[2]/div[7]/div[2]/div[1]/div[1]/div[4]').click()
+        time.sleep(4)
+    driver.find_element_by_xpath('/html/body/div[5]/div[1]/div/div[1]/div[2]/div[7]/div[2]/div[1]/div[1]/div[4]').click()
     time.sleep(4)
-    driver.find_element_by_xpath("/html/body/div[4]/div/div[2]/div[1]/div[2]/div").click()
+    driver.find_element_by_xpath('/html/body/div[3]/div/div[2]/div[1]/div[2]/div').click()
     time.sleep(0.5)
     driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div/form/div[6]/div[1]/div/label[1]').click()
     time.sleep(0.5)
@@ -45,7 +45,7 @@ def matches(data):
         "div", 'class_="event__match event__match--scheduled event__match--last event__match--oneLine"',
     ]
 
-    soup = bs(html)
+    soup = bs(html, 'html.parser')
     table = soup.find("div", class_="sportName soccer")
 
     for row in table:
@@ -58,19 +58,6 @@ def matches(data):
             match = row.find_all(atr_match)
             if (len(match[1].text) == 5 or match[1].text[5:8] == "TKP"):
                 try:
-                    if (match[6].span != None and
-                        match[7].span != None and 
-                        match[8].span != None):
-                        matches.append({
-                            "country": country,
-                            "time": match[1].text[:5],
-                            "team1": match[3].text,
-                            "team2": match[4].text,
-                            "kw1": float(match[6].span.text),
-                            "kx": float(match[7].span.text),
-                            "kw2": float(match[8].span.text)
-                            })
-                except:
                     if (match[5].span != None and
                         match[6].span != None and 
                         match[7].span != None):
@@ -83,5 +70,19 @@ def matches(data):
                             "kx": float(match[6].span.text),
                             "kw2": float(match[7].span.text)
                             })
+                except:
+                    if (match[6].span != None and
+                        match[7].span != None and 
+                        match[8].span != None):
+                        matches.append({
+                            "country": country,
+                            "time": match[1].text[:5],
+                            "team1": match[3].text,
+                            "team2": match[4].text,
+                            "kw1": float(match[6].span.text),
+                            "kx": float(match[7].span.text),
+                            "kw2": float(match[8].span.text)
+                            })
+
     return matches
 
