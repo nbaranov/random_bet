@@ -8,8 +8,9 @@ from moduls.ends import ends
 
 def returnMatchesForRandomchik(matches, hour):
 	randomMathches = []
+	minkf = 1.85
 	for match in matches:
-		if (match["kw1"] > 1.45) and (match["kw2"] > 1.45) and int(match["time"][0:2]) >= hour:
+		if (match["kw1"] > minkf) and (match["kw2"] > minkf) and int(match["time"][0:2]) >= hour:
 			randomMathches.append(match)
 	print(f'''Найден{ends(len(randomMathches), "", "о", "о")} \
 {len(randomMathches)} матч{ends(len(randomMathches), "", "а", "ей")} для Рандомчика''')
