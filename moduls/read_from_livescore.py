@@ -15,15 +15,18 @@ def matches(data):
     driver.get("https://www.livescore.in/ru/")
     time.sleep(5)
     if data == 1:
-        driver.find_element_by_xpath('/html/body/div[6]/div[1]/div/div[1]/div[2]/div[7]/div[2]/div[1]/div[2]/div[3]/div').click()
+        calend = driver.find_elements_by_class_name("calendar__nav")
+        calend[1].click()
         time.sleep(4)
-    driver.find_element_by_xpath('/html/body/div[5]/div[1]/div/div[1]/div[2]/div[7]/div[2]/div[1]/div[1]/div[4]').click()
+    tabs = driver.find_elements_by_class_name("tabs__tab")
+    tabs[3].click()
     time.sleep(4)
-    driver.find_element_by_xpath('/html/body/div[3]/div/div[2]/div[1]/div[2]/div').click()
+    botons = driver.find_elements_by_class_name("header__button")
+    botons[1].click()
     time.sleep(0.5)
-    driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div/form/div[6]/div[1]/div/label[1]').click()
+    driver.find_element_by_xpath('//*[@id="livescore-settings-form"]/div[6]/div[1]/div/label[1]/input').click()
     time.sleep(0.5)
-    driver.find_element_by_xpath('/html/body/div[1]/a').click()
+    driver.find_element_by_id("lsid-window-close").click()
     time.sleep(0.5)
 
 
