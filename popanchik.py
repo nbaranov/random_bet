@@ -3,26 +3,19 @@
 
 import random
 import re
-from read_from_livescore import matches
 from moduls.ends import ends
-from moduls.StartHour import startHour
 
 
-def popanmatches(matches):
-    popanmatches = []
-#    print(f'Используются матчи, которые начнутся после {hour}:00')
+def returnMatchesForPopanchik(matches, hour):
+    popanmatches = [] # выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.
     for line in matches:
-        if ((1.45 <= line["kw1"] <= 1.85 or 1.45 <= line["kw2"] <= 1.85) and int(line["time"][0:2]) > hour
-                and not ((re.search(r"\(Ж\)", line["team1"])) or (re.search(r"\(Ж\)", line["team2"]))
-                         or (re.search(r"U19", line["team1"])) or (re.search(r"U19", line["team2"]))
-                         or (re.search(r"U21", line["team1"])) or (re.search(r"U21", line["team2"]))
-                         or (re.search(r"U20", line["team1"])) or (re.search(r"U20", line["team2"]))
-                         or (re.search(r"U23", line["team1"])) or (re.search(r"U23", line["team2"])))):
+        if ((1.45 <= line["kw1"] <= 1.85 or 1.45 <= line["kw2"] <= 1.85) and int(line["time"][0:2]) >= hour
+                and not ((re.search(r"(\(Ж\))|(U\d{2})", line["team1"])) or (re.search(r"(\(Ж\))|(U\d{2})", line["team2"])))):
             popanmatches.append(line)
     return popanmatches
 
 
-def popan(popanmatches):
+def getPopanPress(popanmatches):
     press = []
     coef = 1
     a = 0
@@ -50,21 +43,21 @@ def popan(popanmatches):
     return press
 
 
-def popanchik():
+def popanchik(matches, hour):
     popanpress = []
+    popmatches = returnMatchesForPopanchik(matches, hour)
 
-    print(f'''Найден{ends(len(popanmatches), "", "о", "о")} \
-{len(popanmatches)} матч{ends(len(popanmatches), "", "а", "ей")} для Попанчика ''')
+    print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
+{len(popmatches)} матч{ends(len(popmatches), "", "а", "ей")} для Попанчика ''')
 
     for _ in range(amt_preses):
-        press = popan(popanmatches)
+        press = getPopanPress(popmatches)
         if press == None: continue
         else: popanpress.append(press)
 
     return popanpress
 
 
-hour = startHour()
 amt_preses = 2
 usedmatches = []
-popanmatches = popanmatches(matches())
+
