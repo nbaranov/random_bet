@@ -27,7 +27,7 @@ def randomchik(matches, hour):
 	elif len(matches) > 5:
 		count = random.randint(2,5)
 	else:
-		count = random.randint(2,len(matches) - 1)
+		count = random.randint(2,len(matches))
 
 	for _ in range(count): 
 		i = random.randint(0, len(matches)-1)

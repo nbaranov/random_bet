@@ -3,6 +3,7 @@
 
 import time
 import re
+import sys
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,24 +11,34 @@ from bs4 import BeautifulSoup as bs
 
 def matches(data):
 
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument("disable-gpu")
+    driver = webdriver.Chrome("/snap/bin/chromium.chromedriver", chrome_options=options)
 
-    driver = webdriver.Chrome(executable_path="./chromedriver")
     driver.get("https://www.livescore.in/ru/")
-    time.sleep(5)
+    sys.stdout.write("\rЗагрузка матчей и коэфициентов 20%\r")
+    time.sleep(1)
     if data == 1:
         calend = driver.find_elements_by_class_name("calendar__nav")
         calend[1].click()
-        time.sleep(4)
+        time.sleep(1)
+    sys.stdout.write("Загрузка матчей и коэфициентов 40%\r")
     tabs = driver.find_elements_by_class_name("tabs__tab")
     tabs[3].click()
-    time.sleep(4)
+    sys.stdout.write("Загрузка матчей и коэфициентов 60%\r")
+    time.sleep(1)
     botons = driver.find_elements_by_class_name("header__button")
     botons[1].click()
-    time.sleep(0.5)
+    sys.stdout.write("Загрузка матчей и коэфициентов 80%\r")
+    time.sleep(0.2)
     driver.find_element_by_xpath('//*[@id="livescore-settings-form"]/div[6]/div[1]/div/label[1]/input').click()
-    time.sleep(0.5)
+    time.sleep(0.2)
+    sys.stdout.write("Загрузка матчей и коэфициентов 90%\r")
     driver.find_element_by_id("lsid-window-close").click()
-    time.sleep(0.5)
+    time.sleep(0.2)
+    sys.stdout.write("Загрузка матчей и коэфициентов 100%\n")
 
 
     html = driver.page_source

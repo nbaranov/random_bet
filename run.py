@@ -27,7 +27,6 @@ while True:
         print('Введите "0" для матчей сегодня или "1" для матчей завтра :')
 
 matches = matches(data)
-
 popanpress = popanchik(matches, hour)
 randomMatches = randomchik(matches, hour)
 
@@ -56,4 +55,4 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
             fileout.write(match + "\n")
 
 
-input("\nРабота программы успешно завершена. \nПрогнозы добавлены в файл out.txt \nНажмите Enter чтобы закрыть программу.")
+print("\nРабота программы успешно завершена. \nПрогнозы добавлены в файл out.txt ")
