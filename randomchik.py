@@ -8,7 +8,7 @@ from moduls.ends import ends
 
 def returnMatchesForRandomchik(matches, hour):
 	randomMathches = []
-	minkf = 1.85
+	minkf = 2
 	for match in matches:
 		if (match["kw1"] > minkf) and (match["kw2"] > minkf) and int(match["time"][0:2]) >= hour:
 			randomMathches.append(match)
@@ -25,7 +25,7 @@ def randomchik(matches, hour):
 		print("У рандомчика матчей нет")
 		return  randomMathches
 	elif len(matches) > 5:
-		count = random.randint(2,5)
+		count = random.randint(2,3)
 	else:
 		count = random.randint(2,len(matches))
 
@@ -45,5 +45,3 @@ def randomchik(matches, hour):
 			randomMathches.append(f'{matches[i]["country"]} {matches[i]["time"]} {matches[i]["team1"]} - {matches[i]["team2"]}\t Победа2\tсумма\t{stavka}\tкф.\t{matches[i]["kw2"]}')
 		matches.pop(i)
 	return randomMathches
-
- 

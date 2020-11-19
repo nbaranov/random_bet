@@ -9,13 +9,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup as bs
 
-def matches(data):
+def matches(data):  
 
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
-    driver = webdriver.Chrome("/snap/bin/chromium.chromedriver", chrome_options=options)
+    driver = webdriver.Chrome("/usr/bin/chromedriver", chrome_options=options)
 
     driver.get("https://www.livescore.in/ru/")
     sys.stdout.write("\rЗагрузка матчей и коэфициентов 20%\r")
