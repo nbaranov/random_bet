@@ -39,14 +39,12 @@ def load_matches(data):
     print()
 
     html = driver.page_source
-    return html
 
     #with open('livescore.html', 'w', encoding="utf-8") as doc:
     #    for line in html:
     #        doc.write(line)
-
     driver.close()
-
+    return html
 
 def html_to_dict(html):
     #with open('livescore.html', 'r', encoding="utf-8") as doc:
