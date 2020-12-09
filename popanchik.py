@@ -6,10 +6,11 @@ import re
 from moduls.ends import ends
 
 
-def returnMatchesForPopanchik(matches, hour):
-    popanmatches = [] # выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.
+def returnMatchesForPopanchik(matches, hour, mink, maxk):
+    '''выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.'''
+    popanmatches = [] 
     for line in matches:
-        if ((1.4 <= line["kw1"] <= 1.75 or 1.4 <= line["kw2"] <= 1.75) and int(line["time"][0:2]) >= hour
+        if ((mink <= line["kw1"] <= maxk or mink <= line["kw2"] <= maxk) and int(line["time"][0:2]) >= hour
                 and not ((re.search(r"(\(Ж\))|(U\d{2})", line["team1"])) or (re.search(r"(\(Ж\))|(U\d{2})", line["team2"])))):
             popanmatches.append(line)
     return popanmatches
@@ -43,9 +44,9 @@ def getPopanPress(popanmatches):
     return press
 
 
-def popanchik(matches, hour):
+def popanchik(matches, hour, mink, maxk):
     popanpress = []
-    popmatches = returnMatchesForPopanchik(matches, hour)
+    popmatches = returnMatchesForPopanchik(matches, hour, mink, maxk)
 
     print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
 {len(popmatches)} матч{ends(len(popmatches), "", "а", "ей")} для Попанчика ''')
