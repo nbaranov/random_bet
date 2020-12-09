@@ -9,7 +9,7 @@ from moduls.ends import ends
 def returnMatchesForPopanchik(matches, hour):
     popanmatches = [] # выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.
     for line in matches:
-        if ((1.45 <= line["kw1"] <= 1.85 or 1.45 <= line["kw2"] <= 1.85) and int(line["time"][0:2]) >= hour
+        if ((1.4 <= line["kw1"] <= 1.75 or 1.4 <= line["kw2"] <= 1.75) and int(line["time"][0:2]) >= hour
                 and not ((re.search(r"(\(Ж\))|(U\d{2})", line["team1"])) or (re.search(r"(\(Ж\))|(U\d{2})", line["team2"])))):
             popanmatches.append(line)
     return popanmatches
@@ -19,7 +19,7 @@ def getPopanPress(popanmatches):
     press = []
     coef = 1
     a = 0
-    ligth_press = random.randint(2,5)
+    ligth_press = random.randint(2,3)
     if ligth_press > (len(popanmatches) - len(usedmatches)):
         print("Недостаточно попанских матчей на 2 пресса")
         return

@@ -8,7 +8,7 @@ from moduls.ends import ends
 
 def returnMatchesForRandomchik(matches, hour):
 	randomMathches = []
-	minkf = 1.85
+	minkf = 2
 	for match in matches:
 		if (match["kw1"] > minkf) and (match["kw2"] > minkf) and int(match["time"][0:2]) >= hour:
 			randomMathches.append(match)
