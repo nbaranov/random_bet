@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/usr/bin/python3
+=======
+#! /bin/python3
+>>>>>>> 92f26e8e87f80157b6005a2edbca9673996bea3e
 # -*- coding: utf-8 -*-
 
 from popanchik import popanchik
@@ -14,7 +18,7 @@ while True:
     try:
         data = int(data)
         if data == 0:
-            from moduls.StartHour import startHour
+            from moduls.start_hour import startHour
             hour = startHour()
             print(f'Используются матчи, которые начнутся после {hour}:00\n')
             break
@@ -28,7 +32,7 @@ while True:
         print('Введите "0" для матчей сегодня или "1" для матчей завтра :')
 
 matches = matches(data)
-popanpress = popanchik(matches, hour)
+popanpress = popanchik(matches, hour, 1.4, 1.75)
 randomMatches = randomchik(matches, hour)
 
 with open("out.txt", "w",encoding="UTF-8") as fileout:

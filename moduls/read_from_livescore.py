@@ -9,72 +9,74 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup as bs
 
+<<<<<<< HEAD
 def matches(data):  
+=======
+
+def show_persent_of_load(start, finish):
+    for i in range(start, finish+1):
+        sys.stdout.write(f"\rЗагрузка матчей и коэфициентов {i}%\r")
+        time.sleep(0.05)
+
+
+def load_matches(data):
+>>>>>>> 92f26e8e87f80157b6005a2edbca9673996bea3e
 
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
+<<<<<<< HEAD
     driver = webdriver.Chrome("/usr/bin/chromedriver", chrome_options=options)
+=======
+    driver = webdriver.Chrome("chromedriver", chrome_options=options)
+    #driver = webdriver.Chrome("chromedriver")
+>>>>>>> 92f26e8e87f80157b6005a2edbca9673996bea3e
 
     driver.get("https://www.livescore.in/ru/")
-    sys.stdout.write("\rЗагрузка матчей и коэфициентов 20%\r")
-    time.sleep(1)
-    if data == 1:
+    show_persent_of_load(0,50)
+    time.sleep(0.5)
+    if data:
         calend = driver.find_elements_by_class_name("calendar__nav")
         calend[1].click()
-        time.sleep(1)
-    sys.stdout.write("Загрузка матчей и коэфициентов 40%\r")
+        time.sleep(0.5)
+    show_persent_of_load(50, 80)
     tabs = driver.find_elements_by_class_name("tabs__tab")
     tabs[3].click()
-    sys.stdout.write("Загрузка матчей и коэфициентов 60%\r")
-    time.sleep(1)
-    botons = driver.find_elements_by_class_name("header__button")
-    botons[1].click()
-    sys.stdout.write("Загрузка матчей и коэфициентов 80%\r")
-    time.sleep(0.2)
-    driver.find_element_by_xpath('//*[@id="livescore-settings-form"]/div[6]/div[1]/div/label[1]/input').click()
-    time.sleep(0.2)
-    sys.stdout.write("Загрузка матчей и коэфициентов 90%\r")
-    driver.find_element_by_id("lsid-window-close").click()
-    time.sleep(0.2)
-    sys.stdout.write("Загрузка матчей и коэфициентов 100%\n")
-
+    show_persent_of_load(80, 100)
+    print()
 
     html = driver.page_source
 
-    with open('livescore.html', 'w', encoding="utf-8") as doc:
-        for line in html:
-            doc.write(line)
-
+    #with open('livescore.html', 'w', encoding="utf-8") as doc:
+    #    for line in html:
+    #        doc.write(line)
     driver.close()
+    return html
 
-    with open('livescore.html', 'r', encoding="utf-8") as doc:
-        html = doc.read()
-
+def html_to_dict(html):
+    #with open('livescore.html', 'r', encoding="utf-8") as doc:
+    #    html = doc.read()
 
     matches = []
     atr_match = [
         "div", 'class_="event__match event__match--scheduled event__match--oneLine"',
-        "div", 'class_="event__match event__match--scheduled event__match--last event__match--oneLine"',
-    ]
+        "div", 'class_="event__match event__match--scheduled event__match--last event__match--oneLine"']
 
-    soup = bs(html, 'html.parser')
-    table = soup.find("div", class_="sportName soccer")
+    table = bs(html, 'html.parser').find("div", class_="sportName soccer")
 
     for row in table:
         if row.find("div", class_="event__titleBox"):
             country = row.find("div", class_="event__titleBox")
             spans = country.find_all("span")
-            country = f"{spans[0].text}: {spans[1].text}"
-        
+            country = f"{spans[0].text}: {spans[1].text}"      
         elif row.find(atr_match):
             match = row.find_all(atr_match)
             if (len(match[1].text) == 5 or match[1].text[5:8] == "TKP"):
                 try:
-                    if (match[5].span != None and
-                        match[6].span != None and 
-                        match[7].span != None):
+                    if all([match[5].span != None,
+                        match[6].span != None,
+                        match[7].span != None]):
                         matches.append({
                             "country": country,
                             "time": match[1].text,
@@ -84,10 +86,10 @@ def matches(data):
                             "kx": float(match[6].span.text),
                             "kw2": float(match[7].span.text)
                             })
-                except:
-                    if (match[6].span != None and
-                        match[7].span != None and 
-                        match[8].span != None):
+                except IndexError:
+                    if all([match[6].span != None,
+                        match[7].span != None, 
+                        match[8].span != None]):
                         matches.append({
                             "country": country,
                             "time": match[1].text[:5],
@@ -100,3 +102,5 @@ def matches(data):
 
     return matches
 
+def matches(data):
+    return html_to_dict(load_matches(data))
