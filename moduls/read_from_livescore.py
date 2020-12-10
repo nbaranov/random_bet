@@ -9,9 +9,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup as bs
 
-<<<<<<< HEAD
-def matches(data):  
-=======
 
 def show_persent_of_load(start, finish):
     for i in range(start, finish+1):
@@ -20,18 +17,13 @@ def show_persent_of_load(start, finish):
 
 
 def load_matches(data):
->>>>>>> 92f26e8e87f80157b6005a2edbca9673996bea3e
 
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
-<<<<<<< HEAD
-    driver = webdriver.Chrome("/usr/bin/chromedriver", chrome_options=options)
-=======
     driver = webdriver.Chrome("chromedriver", chrome_options=options)
     #driver = webdriver.Chrome("chromedriver")
->>>>>>> 92f26e8e87f80157b6005a2edbca9673996bea3e
 
     driver.get("https://www.livescore.in/ru/")
     show_persent_of_load(0,50)
