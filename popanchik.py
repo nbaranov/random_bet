@@ -44,9 +44,8 @@ def getPopanPress(popanmatches):
     return press
 
 
-def popanchik(matches, hour, mink, maxk):
+def popanchik(popmatches):
     popanpress = []
-    popmatches = returnMatchesForPopanchik(matches, hour, mink, maxk)
 
     print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
 {len(popmatches)} матч{ends(len(popmatches), "", "а", "ей")} для Попанчика ''')
