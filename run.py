@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#!/usr/bin/python3
-=======
 #! /usr/bin/python3
->>>>>>> bbf9ed4fc2d9f59d244c5c7b8778b2f31a79150d
 # -*- coding: utf-8 -*-
 
 from popanchik import popanchik
