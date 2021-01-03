@@ -3,8 +3,6 @@
 
 from popanchik import popanchik
 from popanchik import returnMatchesForPopanchik
-from randomchik import randomchik
-from pig import popan_pig
 from moduls.read_from_livescore import matches
 
 def pressWrite(press):
@@ -31,11 +29,7 @@ while True:
 
 matches = matches(data)
 popmatches = returnMatchesForPopanchik(matches, hour, 1.4, 1.75)
-pig_matches = returnMatchesForPopanchik(matches, hour, 1.4, 1.5)
 popanpress = popanchik(popmatches)
-randomMatches = randomchik(matches, hour)
-pig = popan_pig(pig_matches)
-
 
 with open("out.txt", "w",encoding="UTF-8") as fileout:
     if len(popanpress) < 1:
@@ -53,16 +47,5 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
             fileout.write("Пресс от Попанчика на сегодня:\n")
             for press in popanpress:
                 pressWrite(press)
-
-    if len(randomMatches) < 1:
-        fileout.write("\nРандомчик сегодня отдыхает")
-    else:
-        fileout.write("\nПрогнозы от Рандомчика на сегодня\n")
-        for match in randomMatches:
-            fileout.write(match + "\n")
-    
-    if pig:
-        fileout.write(f'\nПрогноз на кабанчика:\n{pig}')
-
 
 print("\nРабота программы успешно завершена. \nПрогнозы добавлены в файл out.txt ")
