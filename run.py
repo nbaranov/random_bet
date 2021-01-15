@@ -47,7 +47,7 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
         for press in popanpress:
             pressWrite(press)
 
-    fileout.write('\n\nВсе "попанcкие" матчи на сегодня:')
+    fileout.write('\n\nВсе "попанcкие" матчи на сегодня:\n')
     for match in popmatches:
         if match["kw1"] < match["kw2"]:
             fileout.write(f'{match["country"]} {match["time"]} {match["team1"]} - {match["team2"]} П1 кф. {match["kw1"]} \n')
