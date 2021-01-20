@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup as bs
 def show_persent_of_load(start, finish):
     for i in range(start, finish+1):
         sys.stdout.write(f"\rЗагрузка матчей и коэфициентов {i}%\r")
-        time.sleep(0.05)
+        time.sleep(0.04)
 
 
 def load_matches(data):
@@ -22,7 +22,7 @@ def load_matches(data):
     options.add_argument('headless')
     options.add_argument('window-size=1920x1080')
     options.add_argument("disable-gpu")
-    driver = webdriver.Chrome("chromedriver", chrome_options=options)
+    driver = webdriver.Chrome("./chromedriver", chrome_options=options)
     #driver = webdriver.Chrome("chromedriver")
 
     driver.get("https://www.livescore.in/ru/")

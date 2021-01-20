@@ -13,7 +13,7 @@ def returnMatchesForPopanchik(matches, hour, mink, maxk):
         if all([(mink <= line["kw1"] <= maxk or mink <= line["kw2"] <= maxk),
                 (int(line["time"][0:2]) >= hour),
                 not ((re.search(r"(\(Ж\))|(U\d{2})", line["team1"])) or (re.search(r"(\(Ж\))|(U\d{2})", line["team2"]))),
-                not (re.search(r"(товар)|(убок)", line["country"]))]):
+                not (re.search(r"(товар)|(убок)|(рофей)", line["country"]))]):
             popanmatches.append(line)
     return popanmatches
 
@@ -51,7 +51,7 @@ def popanchik(popmatches):
 
     print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
 {len(popmatches)} матч{ends(len(popmatches), "", "а", "ей")} для Попанчика ''')
-    if len(popmatches) > 20:
+    if len(popmatches) > 10:
         for _ in range(amt_preses):
             press = getPopanPress(popmatches)
             if press == None: continue
