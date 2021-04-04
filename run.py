@@ -3,7 +3,7 @@
 
 from popanchik import popanchik
 from popanchik import returnMatchesForPopanchik
-from moduls.read_from_livescore import matches
+from moduls.read_from_flashscore import matches
 
 def pressWrite(press):
     for i in press:
@@ -32,7 +32,7 @@ popmatches = returnMatchesForPopanchik(matches, hour, 1.4, 1.75)
 popanpress = popanchik(popmatches)
 
 with open("out.txt", "w",encoding="UTF-8") as fileout:
-    fileout.write("#ПальцемВНебо@probitybets\n\nПоддержка и благодарность:\nhttps://vk.com/app6887721_-93234960\n\n")
+    fileout.write("#ПальцемВНебо@probitybets\n\nПоддержка и благодарность:\nhttps://vk.com/topic-93234960_47252880\n\n")
     if len(popanpress) < 1:
         fileout.write('Попанчик сегодня отдыхает')
     elif len(popanpress) > 1:
@@ -47,13 +47,8 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
         for press in popanpress:
             pressWrite(press)
 
-    fileout.write('\n\nВсе "попанcкие" матчи на сегодня:\n')
-    for match in popmatches:
-        if match["kw1"] < match["kw2"]:
-            fileout.write(f'{match["country"]} {match["time"]} {match["team1"]} - {match["team2"]} П1 кф. {match["kw1"]} \n')
-        else:
-            fileout.write(f'{match["country"]} {match["time"]} {match["team1"]} - {match["team2"]} П2 кф. {match["kw2"]} \n')
-
+    fileout.write('\n\nВы можете получить свой "попанский" пресс или список всех "попанских" матчей у Кота Попана в телеграмме:\
+@ProbityCat_bot: https://t.me/ProbityCat_bot')
 
 
 
