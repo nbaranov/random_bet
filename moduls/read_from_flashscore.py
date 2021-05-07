@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-import sys
 from typing import Text
 import requests
 
@@ -35,7 +34,6 @@ def html_to_dict(html):
             if (re.match('[А-ЯЁ]{3}', row)):
                 row = re.split("(\d{2}:\d{2})|(\d+')", row)
                 country = row[0]
-                print(row)
                 if ("-:-" in row[3]) and ('[' in row[3]) and (']' in row[3] and ('Перенесен' not in row[3])):
                     time = row[1]
                     teams = row[3].split('-:-')[0].strip().split(' - ')
