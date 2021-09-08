@@ -64,6 +64,8 @@ def html_to_dict(html):
                     })
         except IndexError:
             continue
+        except ValueError:
+            continue # В случае если нет коэффциента на победу (стоит прочерк)
     return matches
 
 def matches(data):

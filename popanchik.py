@@ -6,7 +6,7 @@ import re
 from moduls.ends import ends
 
 
-def returnMatchesForPopanchik(matches, hour, mink, maxk):
+def MatchesForPopanchik(matches, hour, mink, maxk):
     '''выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.'''
     popanmatches = [] 
     for line in matches:
@@ -19,40 +19,30 @@ def returnMatchesForPopanchik(matches, hour, mink, maxk):
 
 
 def getPopanPress(popanmatches, minCoefOfPress):
-    presses = []
-    while True:
-        coef = 1
-        usedmatches = []
-        press = []
-        while coef < minCoefOfPress:
-            if (len(popanmatches) - len(usedmatches) == 0):
-                print("Недостаточно попанских матчей на пресс")
-                return 
-            i = random.randint(0, len(popanmatches) - 1)
-            if popanmatches[i] not in usedmatches:
-                usedmatches.append(popanmatches[i])
-                if popanmatches[i]["kw1"] < popanmatches[i]["kw2"]:
-                    press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
+    coef = 1
+    usedmatches = []
+    press = []
+    while coef < minCoefOfPress:
+        if (len(popanmatches) - len(usedmatches) == 0):
+            print("Недостаточно попанских матчей на пресс")
+            return 
+        i = random.randint(0, len(popanmatches) - 1)
+        if popanmatches[i] not in usedmatches:
+            usedmatches.append(popanmatches[i])
+            if popanmatches[i]["kw1"] < popanmatches[i]["kw2"]:
+                press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
 {popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П1 кф. {popanmatches[i]["kw1"]}')
-                    coef *= popanmatches[i]["kw1"]
-                else:
-                    press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
+                coef *= popanmatches[i]["kw1"]
+            else:
+                press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
 {popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П2 кф. {popanmatches[i]["kw2"]}')
-                    coef *= popanmatches[i]["kw2"]
-
-        sumOfBet = random.randint(1,4) * 50
-        
-        press.append(f"Ставка {sumOfBet} Итоговый кф {round(coef, 2)}")
-        
-        if press not in presses:
-            presses.append(press)
-        else:
-            for line in press:
-                print(line)
-            return press
+                coef *= popanmatches[i]["kw2"]
+    
+    press.append(f"Итоговый кф {round(coef, 2)}")
+    return press
 
 
-def popanchik(popmatches, minCoefOfPress):
+def popanchik(popmatches, minCoefOfPress, amt_preses):
     popanpress = []
 
     print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
@@ -66,5 +56,5 @@ def popanchik(popmatches, minCoefOfPress):
     return popanpress
 
 
-amt_preses = 1
+
 

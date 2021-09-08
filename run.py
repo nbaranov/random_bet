@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 
 from popanchik import popanchik
-from popanchik import returnMatchesForPopanchik
+from popanchik import MatchesForPopanchik
 from moduls.read_from_flashscore import matches
 
-MIN_COEF_OF_MATCH = 1.3
-MAX_COEF_OF_MATCH = 1.72
-MIN_COEF_OF_PRESS = 2.3
+MIN_COEF_OF_MATCH = 1.4
+MAX_COEF_OF_MATCH = 1.75
+MIN_COEF_OF_PRESS = 3
+AMT_PRESES = 1
 
 def pressWrite(press):
     for i in press:
         fileout.write(f'{i} \n')
+        print(f'{i}')
 
 while True:
     #data = (input("Собрать прогнозы \nна сегодня - 0 \nна завтра -1. \nВведите 0 или 1 :"))
@@ -33,8 +35,8 @@ while True:
         print('Введите "0" для матчей сегодня или "1" для матчей завтра :')
 
 matches = matches(data)
-popmatches = returnMatchesForPopanchik(matches, hour, MIN_COEF_OF_MATCH, MAX_COEF_OF_MATCH)
-popanpress = popanchik(popmatches, MIN_COEF_OF_PRESS)
+popmatches = MatchesForPopanchik(matches, hour, MIN_COEF_OF_MATCH, MAX_COEF_OF_MATCH)
+popanpress = popanchik(popmatches, MIN_COEF_OF_PRESS, AMT_PRESES)
 
 with open("out.txt", "w",encoding="UTF-8") as fileout:
     fileout.write("#ПальцемВНебо@probitybets\n\nПоддержка и благодарность:\nhttps://vk.com/topic-93234960_47252880\n\n")
