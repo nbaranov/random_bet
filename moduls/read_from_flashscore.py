@@ -10,10 +10,10 @@ from bs4 import BeautifulSoup as bs
 def load_matches(data):
 
     if data == 0:
-        response = requests.get('http://m.flashscore.ru/?s=5')
+        response = requests.get('http://www.flashscore.mobi/?d=0&s=5')
         html = response.text.replace('<br />', '\n')
     elif data == 1:
-        response = requests.get('http://m.flashscore.ru/?d=1&s=5')
+        response = requests.get('http://www.flashscore.mobi/?d=1&s=5')
         html = response.text.replace('<br />', '\n')
 
         
@@ -31,7 +31,7 @@ def html_to_dict(html):
     table[0] = table[0].split('!')[1]
     for row in table:
         try:
-            if (re.match('[А-ЯЁ]{3}', row)):
+            if (re.match('[A-Z]{3}', row)):
                 row = re.split("(\d{2}:\d{2})|(\d+')", row)
                 country = row[0]
                 if ("-:-" in row[3]) and ('[' in row[3]) and (']' in row[3] and ('Перенесен' not in row[3])):
@@ -68,7 +68,7 @@ def html_to_dict(html):
             continue # В случае если нет коэффциента на победу (стоит прочерк)
     return matches
 
-def matches(data):
+def get_matches(data):
     return html_to_dict(load_matches(data))
 
 if __name__ == '__main__':

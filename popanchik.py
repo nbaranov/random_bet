@@ -31,22 +31,21 @@ def getPopanPress(popanmatches, minCoefOfPress):
             usedmatches.append(popanmatches[i])
             if popanmatches[i]["kw1"] < popanmatches[i]["kw2"]:
                 press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
-{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П1 кф. {popanmatches[i]["kw1"]}')
+{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} - W1 coef. {popanmatches[i]["kw1"]}')
                 coef *= popanmatches[i]["kw1"]
             else:
                 press.append(f'{popanmatches[i]["country"]} {popanmatches[i]["time"]} \
-{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} П2 кф. {popanmatches[i]["kw2"]}')
+{popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} - W2 coef. {popanmatches[i]["kw2"]}')
                 coef *= popanmatches[i]["kw2"]
     
-    press.append(f"Итоговый кф {round(coef, 2)}")
+    press.append(f"Finished coef {round(coef, 2)}")
     return press
 
 
 def popanchik(popmatches, minCoefOfPress, amt_preses):
     popanpress = []
 
-    print(f'''Найден{ends(len(popmatches), "", "о", "о")} \
-{len(popmatches)} матч{ends(len(popmatches), "", "а", "ей")} для Попанчика ''')
+    print(f'''Found {len(popmatches)} matches  for Capper''')
     if len(popmatches) > 10:
         for _ in range(amt_preses):
             press = getPopanPress(popmatches, minCoefOfPress)
