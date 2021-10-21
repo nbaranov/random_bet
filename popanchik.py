@@ -3,17 +3,14 @@
 
 import random
 import re
-from moduls.ends import ends
-
 
 def MatchesForPopanchik(matches, hour, mink, maxk):
-    '''выбираются матчи с кефом на фаворита между 1,45 и 1,85, начнутся через 2 и более часов, не женских и не юниорских команд.'''
-    popanmatches = [] 
+    popanmatches = []
     for line in matches:
         if all([(mink <= line["kw1"] <= maxk or mink <= line["kw2"] <= maxk),
                 (int(line["time"][0:2]) >= hour),
-                not ((re.search(r"(\(Ж\))|(U\d{2})", line["team1"])) or (re.search(r"(\(Ж\))|(U\d{2})", line["team2"]))),
-                not (re.search(r"(товар)|(убок)|(рофей)|(БРАЗИЛИЯ)", line["country"]))]):
+                not ((re.search(r"(\(W\))|(U\d{2})", line["team1"])) or (re.search(r"(\(W\))|(U\d{2})", line["team2"]))),
+                not (re.search(r"(Friendly)|(Women)|(Cup)|(BRAZIL)", line["country"]))]):
             popanmatches.append(line)
     return popanmatches
 
@@ -38,7 +35,7 @@ def getPopanPress(popanmatches, minCoefOfPress):
 {popanmatches[i]["team1"]} - {popanmatches[i]["team2"]} - W2 coef. {popanmatches[i]["kw2"]}')
                 coef *= popanmatches[i]["kw2"]
     
-    press.append(f"Finished coef {round(coef, 2)}")
+    press.append(f"Total coef {round(coef, 2)}")
     return press
 
 
@@ -46,7 +43,7 @@ def popanchik(popmatches, minCoefOfPress, amt_preses):
     popanpress = []
 
     print(f'''Found {len(popmatches)} matches  for Capper''')
-    if len(popmatches) > 10:
+    if len(popmatches) >= 10:
         for _ in range(amt_preses):
             press = getPopanPress(popmatches, minCoefOfPress)
             if press == None: continue

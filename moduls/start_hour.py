@@ -3,9 +3,9 @@
 
 import time
 
-def startHour():
+def dataAndStartHour():
     hour = int(str(time.asctime())[11:13])
     if hour < 9:
-        return 11
+        return (0, 11)
     else: 
-        return hour + 2
+        return (0, (hour + 2))  if ((hour + 2) < 24) else (1, 0) 

@@ -4,10 +4,11 @@
 from popanchik import popanchik
 from popanchik import MatchesForPopanchik
 from moduls.read_from_flashscore import get_matches
+from moduls.start_hour import dataAndStartHour
 
-MIN_COEF_OF_MATCH = 1.4
-MAX_COEF_OF_MATCH = 1.75
-MIN_COEF_OF_EXPRESS = 3
+MIN_COEF_OF_MATCH = 1.42
+MAX_COEF_OF_MATCH = 1.76
+MIN_COEF_OF_EXPRESS = 5
 AMT_EXPRESES = 1
 
 def pressWrite(press):
@@ -17,24 +18,12 @@ def pressWrite(press):
 
 print(f"Capper will create {AMT_EXPRESES} express with min coef. {MIN_COEF_OF_EXPRESS}, \
 with coef. on matches from {MIN_COEF_OF_MATCH} to {MAX_COEF_OF_MATCH}")
-while True:
-    #data = (input("Собрать прогнозы \nна сегодня - 0 \nна завтра -1. \nВведите 0 или 1 :"))
-    data = 0
-    try:
-        data = int(data)
-        if data == 0:
-            from moduls.start_hour import startHour
-            hour = startHour()
-            print(f'Use matches that start after {hour}:00\n')
-            break
-        elif data == 1:
-            hour = 0
-            print(f'USe all matches that start tomorow\n')
-            break
-        else:
-            print('Write "0" for today matches or "1" for tomorow matches:')
-    except:
-        print('Write "0" for today matches or "1" for tomorow matches:')
+data, hour = dataAndStartHour()
+if data == 0:
+    print(f'Use matches that start after {hour}:00\n')
+elif data == 1:
+    hour = 0
+    print(f'USe all matches that start tomorow\n')
 
 matches = get_matches(data)
 popmatches = MatchesForPopanchik(matches, hour, MIN_COEF_OF_MATCH, MAX_COEF_OF_MATCH)
@@ -60,3 +49,5 @@ with open("out.txt", "w",encoding="UTF-8") as fileout:
 
 
 print('\nCapper finished work. \nPredicptions in the file "out.txt" ')
+  
+  
